@@ -21,6 +21,16 @@
 
 所有操作都在电脑上通过 `Makefile` 经 SSH 完成，默认机器人主机名为 `xiaoxiaobai`（可用 `HOST=...` 覆盖）。机器人上的代码目录是 `~/xiaoxiaobai`。
 
+下表中省略 `HOST` 的远程命令，要求先按[主教程的 SSH 配置](../README.md#2-配置-ssh)设置 `xiaoxiaobai` 别名（包含机器人的 IP 和用户名）。不配置别名时，请在电脑的本目录下明确指定目标：
+
+```bash
+make setup HOST=user@192.168.1.100
+make run HOST=user@192.168.1.100
+```
+
+把示例 IP 换成机器人实际 IP；小小白镜像的用户名是 `user`，官方系统使用自己设置的用户名。`HOST=...` 只对当前命令生效，每次运行远程命令都要指定。
+
+
 | 命令 | 作用 |
 | :--- | :--- |
 | `make setup` | 同步代码并在机器人上安装依赖（`uv sync --frozen`） |

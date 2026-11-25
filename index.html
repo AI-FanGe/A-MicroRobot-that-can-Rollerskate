@@ -893,6 +893,13 @@ ssh-copy-id xiaoxiaobai</code></pre>
 ssh-keygen -R xiaoxiaobai.local
 ssh-keygen -R &lt;机器人的 IP&gt;</code></pre>
 
+          <p>后面的 <code>make setup</code>、<code>make run</code> 等远程命令默认使用 SSH 别名 <code>xiaoxiaobai</code>，用户名和 IP 从上面的配置读取。先用 <code>ssh xiaoxiaobai</code> 确认能登录，再输入 <code>exit</code> 回到电脑。</p>
+          <p>不配置别名时，在电脑的 <code>xiaoxiaobai/</code> 代码目录下明确指定目标（把示例 IP 换成机器人实际 IP；官方系统使用自己设置的用户名）：</p>
+          <pre><code>make setup HOST=user@192.168.1.100
+make run HOST=user@192.168.1.100
+make stop HOST=user@192.168.1.100</code></pre>
+          <p><code>HOST=...</code> 只对当前命令生效，后续远程命令也要带上。不要写成 <code>make run user@IP</code>。省略用户名时 SSH 通常使用电脑当前用户名，可能登录失败；机器人 IP 改变后也要更新配置或命令。</p>
+
           <h3>3. 配置树莓派接口</h3>
           <p>刷小小白镜像的跳过这一步。手动配置的 SSH 登录树莓派后：</p>
           <pre><code>sudo raspi-config

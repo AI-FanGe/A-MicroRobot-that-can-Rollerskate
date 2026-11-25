@@ -382,6 +382,19 @@ Host xiaoxiaobai
 
 刷小小白镜像的，用户名是 `user`。
 
+后面的 `make setup`、`make run` 等远程命令默认使用上面配置的 SSH 别名 `xiaoxiaobai`，用户名和 IP 从这段配置读取，所以不必重复写 `user@IP`。先运行 `ssh xiaoxiaobai` 确认能登录，输入 `exit` 回到电脑后再执行 `make` 命令。
+
+**不配置 SSH 别名也可以**：在电脑的 `xiaoxiaobai/` 代码目录下，每次运行远程命令时显式传入 `HOST=用户名@IP`。例如（把示例 IP 换成机器人实际 IP；官方系统使用你自己设置的用户名）：
+
+```bash
+make setup HOST=user@192.168.1.100
+make run HOST=user@192.168.1.100
+make stop HOST=user@192.168.1.100
+```
+
+`HOST=...` 只对当前这条命令生效，后续 `make sync`、`make app-enable` 等远程命令也要带上。不要写成 `make run user@IP`。如果只填 IP 而省略用户名，SSH 通常会使用电脑当前用户名，可能导致登录失败。机器人 IP 改变后，也要更新 SSH 配置或命令里的 IP。
+
+
 然后拷贝密钥，免得每次输密码：
 
 ```bash
