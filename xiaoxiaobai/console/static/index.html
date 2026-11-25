@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小小白 控制台</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <div>
+          <strong>小小白 控制台</strong>
+          <p>多台机器人连接 · 代码推送 · 走路 · 表情 · 示教</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="discoverBtn" class="ghost">扫描局域网</button>
+        <span id="clock" class="muted"></span>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="panel-head">
+        <h2>机器人</h2>
+        <button id="toggleFormBtn" class="tiny">添加</button>
+      </div>
+      <form id="robotForm" class="robot-form hidden">
+        <input name="id" type="hidden" />
+        <input name="name" placeholder="名称，例如 桌面 1 号" />
+        <input name="host" placeholder="主机 xiaoxiaobai.local 或 IP" value="xiaoxiaobai.local" required />
+        <div class="row">
+          <input name="user" placeholder="用户名" value="user" />
+          <input name="port" placeholder="端口" value="22" />
+        </div>
+        <input name="password" type="password" placeholder="SSH 密码（必填，除非已配密钥）" autocomplete="current-password" />
+        <div class="row">
+          <button type="submit">保存并连接</button>
+          <button type="button" id="cancelFormBtn" class="ghost">取消</button>
+        </div>
+      </form>
+      <div id="robotList" class="robot-list"></div>
+    </aside>
+
+    <main class="stage">
+      <section class="empty" id="emptyState">
+        <div class="empty-face" aria-hidden="true"></div>
+        <h2>还没有选中的机器人</h2>
+        <p>在左侧点「添加」，填入主机名或 IP。连上之后就可以推送代码、控制走路，并切换点阵表情。</p>
+      </section>
+
+      <section id="desk" class="desk hidden">
+        <div class="desk-head">
+          <div>
+            <p class="eyebrow" id="robotHost"></p>
+            <h1 id="robotTitle">—</h1>
+          </div>
+          <div class="status-pills">
+            <span id="onlinePill" class="pill">未连接</span>
+            <span id="runPill" class="pill">控制未启动</span>
+            <span id="latencyPill" class="pill muted-pill">—</span>
+            <span id="authPill" class="pill warn">未保存密码</span>
+          </div>
+        </div>
+
+        <form id="authForm" class="auth-form">
+          <label>主机
+            <input id="authHost" name="host" placeholder="xiaoxiaobai.local 或 IP" />
+          </label>
+          <label>用户（默认 user）
+            <input id="authUser" name="user" value="user" placeholder="user" />
+          </label>
+          <label>SSH 密码
+            <input id="authPassword" name="password" type="password" placeholder="这台 Pi 的登录密码" autocomplete="current-password" />
+          </label>
+          <button type="submit" class="primary">保存并连接</button>
+        </form>
+
+        <div class="card lead-card">
+          <div class="card-head">
+            <h3>示教 Lead</h3>
+            <span class="muted" id="leadStatus">未开始</span>
+          </div>
+          <p class="lead-hint">用手扳示教机的 13–15 右臂、16–18 左臂。真机同号电机跟随，腿 1–12、头 19 和 ID20 不动。</p>
+          <div class="lead-grid">
+            <label>示教机
+              <select id="leadRobot"></select>
+            </label>
+            <label>真机
+              <select id="followRobot"></select>
+            </label>
+            <label>电机 ID
+              <input id="leadIds" value="13-18" />
+            </label>
+          </div>
+          <div class="row">
+            <button id="leadStartBtn" class="primary" type="button">开始示教</button>
+            <button id="leadStopBtn" class="danger" type="button">停止示教</button>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button data-action="probe">探测连接</button>
+          <button data-action="sync">推送代码</button>
+          <button data-action="setup">推送并安装依赖</button>
+          <button data-action="run" class="primary">启动控制</button>
+          <button data-action="display">启动屏幕</button>
+          <button data-action="stop">停止走路</button>
+          <button data-action="shutdown" class="danger">关机</button>
+        </div>
+
+        <div class="workspace">
+          <div class="head-column">
+            <div class="head-shell">
+              <canvas id="faceCanvas" width="640" height="480"></canvas>
+            </div>
+            <p class="face-caption" id="faceCaption">02 开心</p>
+          </div>
+
+          <div class="control-column">
+            <div class="card">
+              <div class="card-head">
+                <h3>走路</h3>
+                <label class="switch">
+                  <input type="checkbox" id="walkToggle" />
+                  <span>启用 Walk</span>
+                </label>
+              </div>
+              <div class="walk-grid">
+                <div id="stick" class="stick">
+                  <div class="stick-base"></div>
+                  <div id="stickKnob" class="stick-knob"></div>
+                  <span class="hint">拖动摇杆 或 WASD</span>
+                </div>
+                <div class="walk-buttons">
+                  <button data-walk="forward">前进</button>
+                  <div class="row">
+                    <button data-walk="left">左转</button>
+                    <button data-walk="stop">停下</button>
+                    <button data-walk="right">右转</button>
+                  </div>
+                  <button data-walk="back">后退</button>
+                  <p class="vel" id="velReadout">vx 0.00 · vθ 0.00</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3>上半身电机</h3>
+                <span class="muted" id="upperBodyStatus">未启动</span>
+              </div>
+              <p class="lead-hint">拖动 13–20 的 slider 控制上半身电机。启动后会停止当前走路控制循环，避免抢电机总线。</p>
+              <div class="row">
+                <button id="upperBodyStartBtn" class="primary" type="button">启动上半身</button>
+                <button id="upperBodyZeroBtn" type="button">归零</button>
+                <button id="upperBodyStopBtn" class="danger" type="button">停止上半身</button>
+              </div>
+              <div id="upperBodyGrid" class="motor-grid"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3>点阵表情</h3>
+                <span class="muted" id="exprCount">40</span>
+              </div>
+              <div id="exprGrid" class="expr-grid"></div>
+            </div>
+          </div>
+        </div>
+
+        <pre id="log" class="log"></pre>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

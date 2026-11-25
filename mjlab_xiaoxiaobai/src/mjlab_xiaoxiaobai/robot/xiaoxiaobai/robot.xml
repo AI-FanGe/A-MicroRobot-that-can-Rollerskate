@@ -1,0 +1,236 @@
+<mujoco model="xiaoxiaobai">
+  <compiler angle="radian" meshdir="assets_outputmodel" autolimits="true" />
+  <default>
+    <default class="xiaoxiaobai">
+      <joint frictionloss="0.1" armature="0.005" />
+      <position kp="50" dampratio="1" />
+      <default class="visual">
+        <geom contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom group="3" />
+      </default>
+    </default>
+  </default>
+  <default>
+    <default class="xml330_actuator">
+      <joint damping="0.041" frictionloss="0.013" armature="0.0018" />
+      <position kp="0.277" kv="0.0" forcerange="-0.77 0.77" />
+    </default>
+  </default>
+  <sensor>
+    <framequat name="orientation" objtype="site" noise="0.001" objname="imu" />
+    <gyro name="angular-velocity" site="imu" noise="0.005" />
+    <gyro name="imu_ang_vel" site="imu" />
+    <velocimeter name="imu_lin_vel" site="imu" />
+    <accelerometer name="imu_accel" site="imu" />
+    <subtreeangmom name="root_angmom" body="trunk" />
+  </sensor>
+  <asset>
+    <mesh name="trunk_mesh" file="trunk.obj" />
+    <mesh name="trunk_motors_mesh" file="trunk_motors.obj" />
+    <mesh name="head_mesh" file="head.obj" />
+    <mesh name="head_motors_mesh" file="head_motors.obj" />
+    <mesh name="shoulder_mesh" file="shoulder.obj" />
+    <mesh name="humerus__configuration_right_mesh" file="humerus__configuration_right.obj" />
+    <mesh name="humerus__configuration_right_motors_mesh" file="humerus__configuration_right_motors.obj" />
+    <mesh name="radius_mesh" file="radius.obj" />
+    <mesh name="hip_mesh" file="hip.obj" />
+    <mesh name="hip_motors_mesh" file="hip_motors.obj" />
+    <mesh name="hip_block__configuration_right_mesh" file="hip_block__configuration_right.obj" />
+    <mesh name="hip_block__configuration_right_motors_mesh" file="hip_block__configuration_right_motors.obj" />
+    <mesh name="femur__configuration_right_mesh" file="femur__configuration_right.obj" />
+    <mesh name="tibia__configuration_right_mesh" file="tibia__configuration_right.obj" />
+    <mesh name="tibia__configuration_right_motors_mesh" file="tibia__configuration_right_motors.obj" />
+    <mesh name="ankle_block__configuration_right_mesh" file="ankle_block__configuration_right.obj" />
+    <mesh name="ankle_block__configuration_right_motors_mesh" file="ankle_block__configuration_right_motors.obj" />
+    <mesh name="foot_mesh" file="foot.obj" />
+    <mesh name="foot_motors_mesh" file="foot_motors.obj" />
+    <mesh name="shoulder_2_mesh" file="shoulder_2.obj" />
+    <mesh name="humerus__configuration_left_mesh" file="humerus__configuration_left.obj" />
+    <mesh name="humerus__configuration_left_motors_mesh" file="humerus__configuration_left_motors.obj" />
+    <mesh name="radius_2_mesh" file="radius_2.obj" />
+    <mesh name="hip_2_mesh" file="hip_2.obj" />
+    <mesh name="hip_2_motors_mesh" file="hip_2_motors.obj" />
+    <mesh name="hip_block__configuration_left_mesh" file="hip_block__configuration_left.obj" />
+    <mesh name="hip_block__configuration_left_motors_mesh" file="hip_block__configuration_left_motors.obj" />
+    <mesh name="femur__configuration_left_mesh" file="femur__configuration_left.obj" />
+    <mesh name="tibia__configuration_left_mesh" file="tibia__configuration_left.obj" />
+    <mesh name="tibia__configuration_left_motors_mesh" file="tibia__configuration_left_motors.obj" />
+    <mesh name="ankle_block__configuration_left_mesh" file="ankle_block__configuration_left.obj" />
+    <mesh name="ankle_block__configuration_left_motors_mesh" file="ankle_block__configuration_left_motors.obj" />
+    <mesh name="foot_2_mesh" file="foot_2.obj" />
+    <mesh name="foot_2_motors_mesh" file="foot_2_motors.obj" />
+  </asset>
+  <worldbody>
+    <body name="trunk" pos="0 0 0" quat="1 0 0 0">
+      <freejoint name="trunk_freejoint" />
+      <inertial pos="-0.00329704158 -0.000274450645 0.0590158339" mass="0.3819" fullinertia="0.000662572182 0.0005466735 0.000490433057 -5.33598268e-09 3.14333219e-05 2.51819711e-06" />
+      <geom name="trunk_visual" class="visual" type="mesh" mesh="trunk_mesh" rgba="0.55 0.55 0.55 1" />
+      <geom name="trunk_motors_visual" class="visual" type="mesh" mesh="trunk_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+      <geom name="trunk_collision" class="collision" type="box" pos="0.00202506455 1.668159e-08 0.051372822" size="0.0310663666 0.038760277 0.0387690689" />
+      <site group="3" name="body" pos="0 0 0" quat="1 0 0 0" />
+      <site group="3" name="imu" pos="0.0260433702 1.2754172e-07 0.0751406508" quat="0.5 -0.5 -0.5 0.5" />
+      <body name="head" pos="0.000850050054 -2.29366384e-07 0.100052606" quat="1 0 0 0">
+        <!-- The head rocks on the horn of its yaw motor (id 19) on footfalls; passive spring-dampers,
+             randomized in training. Nominal: ~7 Hz with the 125 g head, damping ratio ~0.12. -->
+        <joint axis="1 0 0" name="head_wobble_roll" type="hinge" range="-0.3 0.3" stiffness="0.8" damping="0.004" />
+        <joint axis="0 1 0" name="head_wobble_pitch" type="hinge" range="-0.3 0.3" stiffness="0.8" damping="0.004" />
+        <joint axis="0 0 1" name="head" type="hinge" range="-1.74532926 1.74532926" class="xml330_actuator" />
+        <inertial pos="0.00738806948 0.000263508364 0.0455604697" mass="0.1247" fullinertia="9.37248602e-05 9.77959329e-05 0.000107938842 -8.65617974e-07 1.95156442e-06 3.77995419e-08" />
+        <geom name="head_visual" class="visual" type="mesh" mesh="head_mesh" rgba="0.55 0.55 0.55 1" />
+        <geom name="head_motors_visual" class="visual" type="mesh" mesh="head_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+        <geom name="head_collision" class="collision" type="box" pos="0.000782375336 2.28881836e-07 0.0424446669" size="0.0279748138 0.0320307571 0.0297108963" />
+      </body>
+      <body name="shoulder" pos="0.00085 -0.0548718585 0.0776792655" quat="1 0 0 0">
+        <joint axis="0 -1 0" name="right_shoulder_pitch" type="hinge" range="-0.872664626 0.872664626" class="xml330_actuator" />
+        <inertial pos="0.00124300139 -0.0121174261 0.000879034732" mass="0.0138" fullinertia="2.74038647e-06 5.09889049e-06 4.67166047e-06 6.80017828e-08 -2.27622906e-08 -1.53317732e-07" />
+        <geom name="shoulder_visual" class="visual" type="mesh" mesh="shoulder_mesh" rgba="0.55 0.55 0.55 1" />
+        <geom name="shoulder_collision" class="collision" type="box" pos="5.19566394e-05 -0.0153779417 -0.000188371075" size="0.0179837067 0.0125145948 0.0154869339" />
+        <body name="humerus__configuration_right" pos="0 -0.0215001837 0" quat="1 0 0 0">
+          <joint axis="-1 0 0" name="right_shoulder_roll" type="hinge" range="-0.0436332313 0.829031394" class="xml330_actuator" />
+          <inertial pos="-0.000113867401 0.000108446085 -0.0257466979" mass="0.0431" fullinertia="2.18214763e-05 2.18197313e-05 5.92888613e-06 6.40432356e-09 1.48001119e-07 1.50206304e-07" />
+          <geom name="humerus__configuration_right_visual" class="visual" type="mesh" mesh="humerus__configuration_right_mesh" rgba="0.55 0.55 0.55 1" />
+          <geom name="humerus__configuration_right_motors_visual" class="visual" type="mesh" mesh="humerus__configuration_right_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+          <geom name="humerus__configuration_right_collision" class="collision" type="box" pos="1.66751297e-08 2.23214576e-07 -0.0257498182" size="0.00972999573 0.00973000107 0.00791008759" />
+          <body name="radius" pos="5.00537258e-08 1.36002321e-15 -0.0515001275" quat="1 0 0 0">
+            <joint axis="0 1 0" name="right_elbow" type="hinge" range="-1.84229199 0.0969627361" class="xml330_actuator" />
+            <inertial pos="3.52153317e-08 7.06201033e-05 -0.0344390351" mass="0.017" fullinertia="1.24604227e-05 1.14288037e-05 4.56838967e-06 -1.57420528e-11 4.25728138e-11 1.21002883e-07" />
+            <geom name="radius_visual" class="visual" type="mesh" mesh="radius_mesh" rgba="0.55 0.55 0.55 1" />
+            <geom name="radius_collision" class="collision" type="box" pos="-6.48498485e-08 -0.000417125647 -0.0337095829" size="0.0120134766 0.0140687452 0.0298969566" />
+          </body>
+        </body>
+      </body>
+      <body name="hip" pos="0 -0.0299998717 0" quat="1 0 0 0">
+        <joint axis="0 0 -1" name="right_hip_yaw" type="hinge" range="-0.574019399 1.13252476" class="xml330_actuator" />
+        <inertial pos="-0.00230156557 6.4251403e-08 -0.0108014774" mass="0.0115" fullinertia="1.4747144e-06 5.28308111e-06 5.02029894e-06 -1.53878303e-11 -9.38363944e-08 -9.6550007e-12" />
+        <geom name="hip_visual" class="visual" type="mesh" mesh="hip_mesh" rgba="0.55 0.55 0.55 1" />
+        <geom name="hip_motors_visual" class="visual" type="mesh" mesh="hip_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+        <geom name="hip_collision" class="collision" type="box" pos="-0.00350008193 1.14035349e-08 -0.0168003119" size="0.0210001068 0.0122499139 0.0117601036" />
+        <body name="hip_block__configuration_right" pos="0.0234994815 0.000168515402 -0.0243997897" quat="1 0 0 0">
+          <joint axis="-1 0 0" name="leg_flex_right" type="hinge" range="-0.3 0.3" stiffness="3.8" damping="0.025" />
+          <joint axis="-1 0 0" name="right_hip_roll" type="hinge" range="-0.323855539 0.568201635" class="xml330_actuator" />
+          <inertial pos="-0.0258519827 0.000101309664 -0.00854090147" mass="0.0443" fullinertia="9.06962554e-06 1.55078192e-05 1.25822273e-05 8.74977968e-08 1.57426598e-07 -3.78135839e-08" />
+          <geom name="hip_block__configuration_right_visual" class="visual" type="mesh" mesh="hip_block__configuration_right_mesh" rgba="0.55 0.55 0.55 1" />
+          <geom name="hip_block__configuration_right_motors_visual" class="visual" type="mesh" mesh="hip_block__configuration_right_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+          <geom name="hip_block__configuration_right_collision" class="collision" type="box" pos="-0.025749655 7.60568714e-08 -0.00850013159" size="0.017675 0.00945 0.0122500053" />
+          <body name="femur__configuration_right" pos="-0.0369997335 -9.03914899e-08 -5.89805982e-17" quat="1 0 0 0">
+            <joint axis="0 1 0" name="right_hip_pitch" type="hinge" range="-1.55140378 1.55140378" class="xml330_actuator" />
+            <inertial pos="0.0160545031 -5.87353892e-05 -0.0289451436" mass="0.0267" fullinertia="1.88973253e-05 1.52459371e-05 1.45407065e-05 7.89227618e-09 2.52630147e-06 1.11151967e-09" />
+            <geom name="femur__configuration_right_visual" class="visual" type="mesh" mesh="femur__configuration_right_mesh" rgba="0.55 0.55 0.55 1" />
+            <geom name="femur__configuration_right_collision" class="collision" type="box" pos="0.0142557853 -0.000168719021 -0.027992197" size="0.0179978912 0.0170103324 0.0259055595" />
+            <body name="tibia__configuration_right" pos="0.015000252 -0.014668425 -0.0560001275" quat="1 0 0 0">
+              <joint axis="0 1 0" name="right_knee" type="hinge" range="-0.266647524 1.57564446" class="xml330_actuator" />
+              <inertial pos="-0.00277941434 0.0145953133 -0.0263141259" mass="0.0547" fullinertia="4.35271449e-05 3.74428031e-05 2.14429308e-05 -3.43512761e-08 -5.55284111e-06 2.60230688e-07" />
+              <geom name="tibia__configuration_right_visual" class="visual" type="mesh" mesh="tibia__configuration_right_mesh" rgba="0.55 0.55 0.55 1" />
+              <geom name="tibia__configuration_right_motors_visual" class="visual" type="mesh" mesh="tibia__configuration_right_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+              <geom name="tibia__configuration_right_collision" class="collision" type="box" pos="-0.00366124526 0.0144999501 -0.0355927088" size="0.0161294373 0.0173955375 0.0326342422" />
+              <body name="ankle_block__configuration_right" pos="-0.0150001501 0.0144999096 -0.0732131854" quat="1 0 0 0">
+                <joint axis="0 1 0" name="right_ankle_pitch" type="hinge" range="-0.499358092 0.76115748" class="xml330_actuator" />
+                <inertial pos="0.0118843113 0.000175730185 0.00848681474" mass="0.0443" fullinertia="8.9942635e-06 1.61296414e-05 1.3259099e-05 5.25694636e-08 -1.67975523e-07 1.78448853e-08" />
+                <geom name="ankle_block__configuration_right_visual" class="visual" type="mesh" mesh="ankle_block__configuration_right_mesh" rgba="0.55 0.55 0.55 1" />
+                <geom name="ankle_block__configuration_right_motors_visual" class="visual" type="mesh" mesh="ankle_block__configuration_right_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+                <geom name="ankle_block__configuration_right_collision" class="collision" type="box" pos="0.0114999766 -1.93216124e-08 0.00800013056" size="0.01785 0.00945 0.0119" />
+                <body name="foot" pos="0.0384998077 0 -5.55111512e-17" quat="1 0 0 0">
+                  <joint axis="-1 0 0" name="right_ankle_roll" type="hinge" range="-0.678739153 0.678739153" class="xml330_actuator" />
+                  <inertial pos="-0.0117760822 -3.40481392e-07 -0.0189214845" mass="0.0275" fullinertia="8.74880179e-06 2.52441095e-05 2.94590384e-05 -6.45192859e-10 -5.88352531e-07 -1.10552728e-10" />
+                  <geom name="foot_visual" class="visual" type="mesh" mesh="foot_mesh" rgba="0.55 0.55 0.55 1" />
+                  <geom name="foot_motors_visual" class="visual" type="mesh" mesh="foot_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+                  <geom name="right_foot_collision" class="collision" type="box" pos="-0.0119998311 -2.05137053e-08 -0.0244875403" size="0.048 0.0254999988 0.003" />
+                  <site group="3" name="right_foot" pos="-0.0119998311 -2.05137053e-08 -0.0274875403" quat="1 0 0 0" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="shoulder_2" pos="0.00085 0.0548713998 0.0776792655" quat="1 0 0 0">
+        <joint axis="0 1 0" name="left_shoulder_pitch" type="hinge" range="-0.872664626 0.872664626" class="xml330_actuator" />
+        <inertial pos="0.00124298941 0.0121178937 0.000879022838" mass="0.0138" fullinertia="2.74038546e-06 5.09888412e-06 4.67165639e-06 -6.80004281e-08 -2.27609677e-08 1.53316813e-07" />
+        <geom name="shoulder_2_visual" class="visual" type="mesh" mesh="shoulder_2_mesh" rgba="0.55 0.55 0.55 1" />
+        <geom name="shoulder_2_collision" class="collision" type="box" pos="5.19566394e-05 0.0153784357 -0.000188371075" size="0.0179837067 0.0125145962 0.0154869339" />
+        <body name="humerus__configuration_left" pos="0 0.0215001837 0" quat="1 0 0 0">
+          <joint axis="-1 0 0" name="left_shoulder_roll" type="hinge" range="-0.829031394 0.0436332313" class="xml330_actuator" />
+          <inertial pos="-0.000113867389 -0.000107988037 -0.0257466979" mass="0.0431" fullinertia="2.18214761e-05 2.18197313e-05 5.92888594e-06 -6.40431392e-09 1.48001124e-07 -1.50206395e-07" />
+          <geom name="humerus__configuration_left_visual" class="visual" type="mesh" mesh="humerus__configuration_left_mesh" rgba="0.55 0.55 0.55 1" />
+          <geom name="humerus__configuration_left_motors_visual" class="visual" type="mesh" mesh="humerus__configuration_left_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+          <geom name="humerus__configuration_left_collision" class="collision" type="box" pos="1.66751297e-08 2.26919701e-07 -0.0257498182" size="0.00972999573 0.00972999573 0.00791008759" />
+          <body name="radius_2" pos="5.00537258e-08 -1.36002321e-15 -0.0515001275" quat="1 0 0 0">
+            <joint axis="0 -1 0" name="left_elbow" type="hinge" range="-0.0969627361 1.84229199" class="xml330_actuator" />
+            <inertial pos="3.52399093e-08 -7.01837471e-05 -0.0344390362" mass="0.017" fullinertia="1.24604218e-05 1.14288024e-05 4.56839071e-06 1.58247553e-11 4.27617605e-11 -1.21004148e-07" />
+            <geom name="radius_2_visual" class="visual" type="mesh" mesh="radius_2_mesh" rgba="0.55 0.55 0.55 1" />
+            <geom name="radius_2_collision" class="collision" type="box" pos="-6.48498485e-08 0.000417558615 -0.0337095829" size="0.0120134766 0.0140687466 0.0298969566" />
+          </body>
+        </body>
+      </body>
+      <body name="hip_2" pos="0 0.0299998717 0" quat="1 0 0 0">
+        <joint axis="0 0 -1" name="left_hip_yaw" type="hinge" range="-1.13252476 0.574019399" class="xml330_actuator" />
+        <inertial pos="-0.00230156538 -3.29411173e-08 -0.010801477" mass="0.0115" fullinertia="1.47471405e-06 5.28308102e-06 5.02029868e-06 1.5395407e-11 -9.38364019e-08 9.61154843e-12" />
+        <geom name="hip_2_visual" class="visual" type="mesh" mesh="hip_2_mesh" rgba="0.55 0.55 0.55 1" />
+        <geom name="hip_2_motors_visual" class="visual" type="mesh" mesh="hip_2_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+        <geom name="hip_2_collision" class="collision" type="box" pos="-0.00350008193 2.1959645e-08 -0.0168003119" size="0.0210001068 0.0122499139 0.0117601036" />
+        <body name="hip_block__configuration_left" pos="0.0234994815 -0.000168515402 -0.0243997897" quat="1 0 0 0">
+          <joint axis="-1 0 0" name="leg_flex_left" type="hinge" range="-0.3 0.3" stiffness="3.8" damping="0.025" />
+          <joint axis="-1 0 0" name="left_hip_roll" type="hinge" range="-0.568201635 0.323855539" class="xml330_actuator" />
+          <inertial pos="-0.0258519827 -0.000101303719 -0.00854090148" mass="0.0443" fullinertia="9.06962555e-06 1.55078193e-05 1.25822274e-05 -8.74970043e-08 1.5742668e-07 3.78162176e-08" />
+          <geom name="hip_block__configuration_left_visual" class="visual" type="mesh" mesh="hip_block__configuration_left_mesh" rgba="0.55 0.55 0.55 1" />
+          <geom name="hip_block__configuration_left_motors_visual" class="visual" type="mesh" mesh="hip_block__configuration_left_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+          <geom name="hip_block__configuration_left_collision" class="collision" type="box" pos="-0.025749655 -4.17400177e-08 -0.00850013159" size="0.017675 0.00944999933 0.0122500053" />
+          <body name="femur__configuration_left" pos="-0.0369997335 9.03914899e-08 -5.89805982e-17" quat="1 0 0 0">
+            <joint axis="0 -1 0" name="left_hip_pitch" type="hinge" range="-1.55140378 1.55140378" class="xml330_actuator" />
+            <inertial pos="0.0160546043 5.87997452e-05 -0.0289451494" mass="0.0267" fullinertia="1.88973171e-05 1.52460469e-05 1.45408152e-05 -7.90083086e-09 2.526302e-06 -1.12158891e-09" />
+            <geom name="femur__configuration_left_visual" class="visual" type="mesh" mesh="femur__configuration_left_mesh" rgba="0.55 0.55 0.55 1" />
+            <geom name="femur__configuration_left_collision" class="collision" type="box" pos="0.0142557853 0.000168751907 -0.027992197" size="0.0179978912 0.0170103328 0.0259055595" />
+            <body name="tibia__configuration_left" pos="0.015000252 0.014668425 -0.0560001275" quat="1 0 0 0">
+              <joint axis="0 -1 0" name="left_knee" type="hinge" range="-1.57564446 0.266647524" class="xml330_actuator" />
+              <inertial pos="-0.00277941872 -0.0145953045 -0.026314147" mass="0.0547" fullinertia="4.35271167e-05 3.74427993e-05 2.14429263e-05 3.43495398e-08 -5.55284954e-06 -2.60204145e-07" />
+              <geom name="tibia__configuration_left_visual" class="visual" type="mesh" mesh="tibia__configuration_left_mesh" rgba="0.55 0.55 0.55 1" />
+              <geom name="tibia__configuration_left_motors_visual" class="visual" type="mesh" mesh="tibia__configuration_left_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+              <geom name="tibia__configuration_left_collision" class="collision" type="box" pos="-0.00366124526 -0.0144999172 -0.0355927088" size="0.0161294373 0.0173955378 0.0326342422" />
+              <body name="ankle_block__configuration_left" pos="-0.0150001501 -0.0144999096 -0.0732134197" quat="1 0 0 0">
+                <joint axis="0 -1 0" name="left_ankle_pitch" type="hinge" range="-0.76115748 0.499358092" class="xml330_actuator" />
+                <inertial pos="0.0118843113 -0.000175724224 0.00848704893" mass="0.0443" fullinertia="8.99426347e-06 1.61296415e-05 1.3259099e-05 -5.2568565e-08 -1.67975519e-07 -1.78474527e-08" />
+                <geom name="ankle_block__configuration_left_visual" class="visual" type="mesh" mesh="ankle_block__configuration_left_mesh" rgba="0.55 0.55 0.55 1" />
+                <geom name="ankle_block__configuration_left_motors_visual" class="visual" type="mesh" mesh="ankle_block__configuration_left_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+                <geom name="ankle_block__configuration_left_collision" class="collision" type="box" pos="0.0114999766 5.36384664e-08 0.00800036477" size="0.01785 0.00944999933 0.0119" />
+                <body name="foot_2" pos="0.0384998077 0 0" quat="1 0 0 0">
+                  <joint axis="-1 0 0" name="left_ankle_roll" type="hinge" range="-0.678739153 0.678739153" class="xml330_actuator" />
+                  <inertial pos="-0.0117719105 3.2627415e-07 -0.0189211179" mass="0.0275" fullinertia="8.74885538e-06 2.52411912e-05 2.94558208e-05 8.82879068e-10 -5.88143093e-07 1.11295241e-10" />
+                  <geom name="foot_2_visual" class="visual" type="mesh" mesh="foot_2_mesh" rgba="0.55 0.55 0.55 1" />
+                  <geom name="foot_2_motors_visual" class="visual" type="mesh" mesh="foot_2_motors_mesh" rgba="0.301961 0.301961 0.301961 1" />
+                  <geom name="left_foot_collision" class="collision" type="box" pos="-0.0119998311 5.34000478e-08 -0.0244873061" size="0.048 0.0254999993 0.003" />
+                  <site group="3" name="left_foot" pos="-0.0119998311 5.34000478e-08 -0.0274873061" quat="1 0 0 0" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <exclude body1="hip" body2="femur__configuration_right" />
+    <exclude body1="hip_2" body2="femur__configuration_left" />
+  </contact>
+  <actuator>
+    <position class="xml330_actuator" name="head" joint="head" inheritrange="1" />
+    <position class="xml330_actuator" name="right_shoulder_pitch" joint="right_shoulder_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="right_shoulder_roll" joint="right_shoulder_roll" inheritrange="1" />
+    <position class="xml330_actuator" name="right_elbow" joint="right_elbow" inheritrange="1" />
+    <position class="xml330_actuator" name="right_hip_yaw" joint="right_hip_yaw" inheritrange="1" />
+    <position class="xml330_actuator" name="right_hip_roll" joint="right_hip_roll" inheritrange="1" />
+    <position class="xml330_actuator" name="right_hip_pitch" joint="right_hip_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="right_knee" joint="right_knee" inheritrange="1" />
+    <position class="xml330_actuator" name="right_ankle_pitch" joint="right_ankle_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="right_ankle_roll" joint="right_ankle_roll" inheritrange="1" />
+    <position class="xml330_actuator" name="left_shoulder_pitch" joint="left_shoulder_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="left_shoulder_roll" joint="left_shoulder_roll" inheritrange="1" />
+    <position class="xml330_actuator" name="left_elbow" joint="left_elbow" inheritrange="1" />
+    <position class="xml330_actuator" name="left_hip_yaw" joint="left_hip_yaw" inheritrange="1" />
+    <position class="xml330_actuator" name="left_hip_roll" joint="left_hip_roll" inheritrange="1" />
+    <position class="xml330_actuator" name="left_hip_pitch" joint="left_hip_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="left_knee" joint="left_knee" inheritrange="1" />
+    <position class="xml330_actuator" name="left_ankle_pitch" joint="left_ankle_pitch" inheritrange="1" />
+    <position class="xml330_actuator" name="left_ankle_roll" joint="left_ankle_roll" inheritrange="1" />
+  </actuator>
+</mujoco>

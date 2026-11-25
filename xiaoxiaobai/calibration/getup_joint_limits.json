@@ -1,0 +1,48 @@
+{
+  "left_ankle_pitch": {
+    "high_deg": 39.0,
+    "high_real_deg": 37.6,
+    "high_time": "2026-11-04 20:53:08",
+    "low_deg": -59.5,
+    "low_real_deg": -59.4,
+    "low_time": "2026-11-04 20:53:21"
+  },
+  "right_shoulder_roll": {
+    "high_deg": 137.5,
+    "high_real_deg": 137.4,
+    "high_time": "2026-11-04 20:55:15",
+    "low_deg": -2.5,
+    "low_real_deg": -2.5,
+    "low_source": "training model range"
+  },
+  "right_shoulder_pitch": {
+    "high_deg": 161.5,
+    "high_real_deg": 159.3,
+    "high_time": "2026-11-04 20:55:33",
+    "low_deg": -142.0,
+    "low_real_deg": -135.4,
+    "low_time": "2026-11-04 20:55:38"
+  },
+  "right_ankle_pitch": {
+    "low_deg": -39.0,
+    "low_real_deg": -37.6,
+    "high_deg": 59.5,
+    "high_real_deg": 59.4,
+    "mirrored_from": "left_ankle_pitch"
+  },
+  "left_shoulder_pitch": {
+    "low_deg": -161.5,
+    "low_real_deg": -159.3,
+    "high_deg": 142.0,
+    "high_real_deg": 135.4,
+    "mirrored_from": "right_shoulder_pitch"
+  },
+  "left_shoulder_roll": {
+    "low_deg": -137.5,
+    "low_real_deg": -137.4,
+    "mirrored_from": "right_shoulder_roll",
+    "high_deg": 2.5,
+    "high_real_deg": 2.5,
+    "high_source": "training model range"
+  }
+}

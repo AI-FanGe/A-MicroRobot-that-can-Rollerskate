@@ -1,0 +1,19 @@
+# Boot-time LCD expression player for Xiaoxiaobai.
+#
+# Reference unit for the default image (user "user", repo at /home/user/xiaoxiaobai).
+# `make display-enable` installs a copy generated from the robot's real $HOME/$USER.
+[Unit]
+Description=Xiaoxiaobai LCD expression player
+After=multi-user.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/xiaoxiaobai
+Environment=PYTHONPATH=/home/user/xiaoxiaobai/src
+ExecStart=/home/user/xiaoxiaobai/.venv/bin/python -u src/display_smile.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+**__pycache__/
+
+.venv/
+
+logs/
+
+placo_test.py
+
+.console-data/
+
+build/

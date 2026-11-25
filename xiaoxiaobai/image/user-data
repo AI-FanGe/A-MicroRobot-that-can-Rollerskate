@@ -1,0 +1,4 @@
+#cloud-config
+# 小小白镜像已经配好了用户（user / password）、主机名（xiaoxiaobai）、SSH 和硬件接口，这个文件不用改。
+# Wi-Fi 在同一目录的 network-config 里设置。
+ssh_pwauth: true

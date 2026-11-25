@@ -1,0 +1,23 @@
+# Boot-time robot API + web UI for Xiaoxiaobai.
+#
+# Reference unit for the default image (user "user", repo at /home/user/xiaoxiaobai).
+# `make api-enable` installs a copy generated from the robot's real $HOME/$USER.
+[Unit]
+Description=Xiaoxiaobai robot API and web UI
+After=network.target bluetooth.target
+Wants=bluetooth.target
+
+[Service]
+Type=simple
+User=user
+WorkingDirectory=/home/user/xiaoxiaobai
+Environment=PYTHONPATH=/home/user/xiaoxiaobai/src
+Environment=XIAOXIAOBAI_API_PORT=8000
+ExecStart=/home/user/xiaoxiaobai/.venv/bin/python -u -m api
+AmbientCapabilities=CAP_NET_ADMIN
+KillMode=process
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

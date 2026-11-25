@@ -1,0 +1,20 @@
+# 小小白的 Wi-Fi 设置。
+#
+# 把下面的 YOUR_WIFI_NAME 和 YOUR_WIFI_PASSWORD 换成你的 Wi-Fi 名称和密码，保留两边的英文双引号，
+# 其他内容不要动。
+# - 主控只能连 2.4 GHz 的 Wi-Fi（手机热点也要切到 2.4 GHz）。
+# - 缩进必须是空格，不能用 Tab。
+# - 想加第二个网络（比如手机热点），照着第一个再写两行，缩进对齐。
+# - 不在中国使用时，把 CN 改成所在国家的两位代码（US、GB、DE ……）。
+# - 以后改了这个文件，开机时会自动重新应用（会多重启一次）。
+# - 也可以不改这里：开机后用小小白 App 通过蓝牙给它配网。
+network:
+  version: 2
+  wifis:
+    wlan0:
+      dhcp4: true
+      optional: true
+      regulatory-domain: "CN"
+      access-points:
+        "YOUR_WIFI_NAME":
+          password: "YOUR_WIFI_PASSWORD"

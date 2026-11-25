@@ -1,0 +1,10 @@
+**/__pycache__/
+
+.vscode/*
+.venv/*
+
+logs/*
+wandb/*
+videos/
+*.log
+MUJOCO_LOG.TXT

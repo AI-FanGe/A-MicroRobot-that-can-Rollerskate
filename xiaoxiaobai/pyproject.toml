@@ -1,0 +1,28 @@
+[project]
+name = "xiaoxiaobai"
+version = "0.0.2"
+description = "Xiaoxiaobai project"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bleak>=1.0",
+    "numpy",
+    "onnxruntime>=1.26.0",
+    "pillow>=12.3.0",
+    "placo>=0.9.23",
+    "pollen_bmi088_imu_library==1.0.0rc1",
+    "rustypot>=1.4.2",
+    "spidev>=3.8",
+    "websockets>=14",
+]
+
+[dependency-groups]
+sim = [
+    "better-actuator-models",
+    "mujoco>=3.8.1",
+]
+
+[tool.uv]
+override-dependencies = [
+    "numpy>=2.3",
+]

@@ -1,0 +1,39 @@
+# AI assistant/editor local state
+.cursor/
+.claude/
+.codex/
+.cusdor/
+.cursorignore
+.cursorindexingignore
+.claude.json
+CLAUDE.local.md
+
+# Local caches and build outputs
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.gradle/
+.kotlin/
+build/
+node_modules/
+*.egg-info/
+.DS_Store
+.idea/
+.vscode/
+
+# Local configuration, credentials and logs
+.env
+.env.*
+!.env.example
+!.env.sample
+local.properties
+*.jks
+*.keystore
+*.log
+logs/
+wandb/

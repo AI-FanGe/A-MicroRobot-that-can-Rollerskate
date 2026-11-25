@@ -1,0 +1,16 @@
+Copyright (c) 2026 AI-FanGe
+
+This repository contains materials under different licenses, matching the
+license files distributed with the project:
+
+- Software: GNU General Public License v3.0. See xiaoxiaobai/LICENSE
+  and mjlab_xiaoxiaobai/LICENSE for the full terms and applicable notices.
+- Hardware designs, 3D models and printing files in hardware/:
+  Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+  (CC BY-NC-SA 4.0). See hardware/LICENSE for the full terms.
+- Noto Sans SC fonts in xiaoxiaobai/src/fonts/: SIL Open Font License.
+  See the license notice distributed in that directory.
+
+Third-party notices and licenses remain applicable to their respective
+components. Portions derived from mjlab_microban retain their Apache 2.0
+notices; the license text is in mjlab_xiaoxiaobai/LICENSE.Apache-2.0.
