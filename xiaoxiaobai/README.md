@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="README.md"><strong>中文</strong></a> | <a href="README.en.md">English</a>
+</p>
+
 # 小小白机器人端代码
 
 运行在主控板上的控制代码，以及配套的头部固件、Web UI 和安卓 App。

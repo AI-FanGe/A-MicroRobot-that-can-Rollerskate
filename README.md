@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="README.md"><strong>中文</strong></a> | <a href="README.en.md">English</a>
+</p>
+
 > 此项目由 [AI研究室-帆哥](https://space.bilibili.com/2161614) 和启元机器人团队共创完成，感谢启元机器人团队的技术支持。
 
 <div align="center">

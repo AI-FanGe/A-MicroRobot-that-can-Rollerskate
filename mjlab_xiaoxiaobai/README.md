@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="README.md"><strong>中文</strong></a> | <a href="README.en.md">English</a>
+</p>
+
 # MjLab Xiaoxiaobai
 
 小小白的强化学习训练环境，基于 [MjLab](https://github.com/mujocolab/mjlab)。执行器模型使用 [BAM](https://github.com/Rhoban/bam)，配合域随机化实现 sim-to-real。
