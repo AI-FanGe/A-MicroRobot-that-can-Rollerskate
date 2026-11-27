@@ -66,6 +66,7 @@ Thanks also to open-source tools including [MjLab](https://github.com/mujocolab/
 - [Video Highlights](#video-highlights)
 - [Project Overview](#project-overview)
 - [Repository Structure](#repository-structure)
+- [Bill of Materials (BOM)](BOM.en.md)
 - [Assembly Guide](#assembly-guide)
 - [Software Deployment](#software-deployment)
 - [Usage Guide](#usage-guide)
@@ -119,9 +120,9 @@ Xiaoxiaobai is a desktop humanoid robot whose movements are driven by policies t
 | Height / weight | Approximately 30 cm / 1.07 kg (CAD estimate) |
 | Degrees of freedom | 20: legs 6×2, arms 3×2, head 2 (yaw + pitch) |
 | Servos | 20 bus servos, using a 1 Mbps bus through a servo controller board connected to the main controller via USB |
-| Main controller | Main controller board, IMU (I2C) |
+| Main controller | Raspberry Pi Zero 2 W, YBX-BMI088 IMU (I2C) |
 | Head | Head coprocessor (camera + microphone), 2-inch LCD, I2S amplifier + speaker; communicates with the main controller over UART (3 Mbaud) |
-| Power | Two 18650 cells (2S1P), approximately 106 g, centered inside the torso |
+| Power | Two Sony 18650 cells (2S1P), centered inside the torso, with weight depending on the exact cells; MP1584 buck converter output set to 5 V |
 | Structure | 25 3D-printed structural parts |
 
 ### System Architecture
@@ -167,19 +168,24 @@ Keep the two code directories as siblings: the training scripts export policies 
 
 ### 1. Gather the Parts
 
+See the **[Bill of Materials (BOM)](BOM.en.md)** for models, specifications, quantities, and items still to be confirmed. Roller-skate bearings are listed separately and are not included in the body bearing count.
+
 | Part | Quantity | Notes |
 | :--- | :---: | :--- |
 | Bus servo | 20 | Each servo comes with one 180 mm cable and screws |
 | Idler horn | 4 | For the passive side of the dual-servo blocks at the hips and ankles |
-| Main controller board + microSD card (≥16 GB) | 1 | Main controller |
-| Servo controller board | 1 | Servo bus controller, connected to the main controller via USB |
-| IMU module | 1 | Connects to the main controller over I2C; stacked with it inside the torso |
+| Raspberry Pi Zero 2 W + microSD card (≥16 GB) | 1 each | Main controller and OS storage |
+| OpenRB servo controller board | 1 | Connects to the main controller via USB; see the BOM for the board version |
+| YBX-BMI088 IMU module | 1 | Connects to the main controller over I2C; stacked with it inside the torso |
 | Head coprocessor | 1 | With camera and microphone |
 | 2-inch LCD (320×240) | 1 | Face display |
 | I2S amplifier + small speaker | 1 | Speaker approximately 35×25 mm |
-| 18650 lithium-ion cell | 2 | 2S1P battery pack |
-| 2S BMS, USB-C charging board, power switch | 1 each | Battery management and charging |
-| Φ22 × 4 mm thin-section bearing | 5 | Shaft support at both hips, both shoulders, and the head |
+| Sony 18650 lithium-ion cell | 2 | 2S1P battery pack; exact cell model and capacity to be confirmed |
+| 2S BMS, power switch | 1 each | Battery protection and power control; exact specifications to be confirmed |
+| USB Type-C boost charging module | 1 | Select the **2S, 8.4 V, 2 A** variant |
+| MP1584 adjustable DC-DC buck converter | 1 | **Set and keep the output at 5 V** to power the main controller |
+| Body bearing: 16 mm inner diameter × 22 mm outer diameter × 4 mm thickness | **4** | Body shaft support; exact mounting locations to be confirmed |
+| Roller-skate bearing: 5 mm inner diameter × 10 mm outer diameter × 4 mm thickness | **8** | For the roller skates; counted separately from body bearings |
 | M2 / M2.5 self-tapping screws, servo cables, heat-shrink tubing | As needed | Servo cables can be cut to length and re-crimped |
 
 You will also need a 3D printer and basic tools such as a soldering iron and crimping tool.
@@ -249,7 +255,7 @@ Assemble the other leg as a mirror image.
 
 - Install the two hip yaw servos (IDs 1 and 7) in the pelvis, with bearings supporting the shafts.
 - The waist connects the pelvis to the upper torso.
-- Install the two shoulder pitch servos (IDs 13 and 16) and head yaw servo (ID 19) in the upper torso, each with a bearing as well.
+- Install the two shoulder pitch servos (IDs 13 and 16) and head yaw servo (ID 19) in the upper torso. There are 4 body bearings in total; exact mounting locations are to be confirmed. See the [BOM](BOM.en.md).
 - Stack the main controller and IMU into a control module and mount it on one side of the torso. **Secure the IMU firmly**; any looseness directly affects walking.
 - Place the battery pack in the center of the torso for a lower, more stable center of mass.
 
@@ -306,7 +312,7 @@ Head wiring:
 | RST | D3 | | | | | | |
 | BL | D4 | | | | | | |
 
-Connect UART TX to RX and RX to TX, and connect the grounds together. The main controller requires a stable 5 V supply; step down the battery voltage according to your power design (the diagram above shows only signal connections and servo power). If the head board is powered from the main controller's 5V supply, disconnect that 5V wire before plugging in USB to flash the head firmware.
+Connect UART TX to RX and RX to TX, and connect the grounds together. The main controller is powered from the battery through an MP1584 adjustable DC-DC buck converter, with its output set and kept at 5 V (the diagram above shows only signal connections and servo power). If the head board is powered from the main controller's 5V supply, disconnect that 5V wire before plugging in USB to flash the head firmware.
 
 > [!WARNING]
 > When soldering splitter cables, always connect wires with matching signal names. Incorrect wiring can permanently damage the servos. Insulate all solder joints with heat-shrink tubing or hot glue.
