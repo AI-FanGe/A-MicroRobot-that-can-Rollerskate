@@ -19,7 +19,7 @@ This bill of materials lists the parts, models/specifications, and quantities ne
 | Bus servo | XL330; 1 Mbps bus rate | 20 | 12 for the legs, 6 for the arms, and 2 for the head; each servo comes with one 180 mm cable and screws |
 | Head coprocessor | Seeed Studio XIAO ESP32S3 Sense | 1 | Includes a camera and microphone; see the [head firmware](xiaoxiaobai/firmware/xiao_face/xiao_face.ino) |
 | Face display | 2-inch LCD, 320×240 | 1 | Displays facial animations |
-| Audio amplifier | MAX98-series I2S amplifier module | 1 | Drives the head speaker |
+| Audio amplifier | MAX98357 I2S amplifier module | 1 | Drives the head speaker |
 | Speaker | Small speaker | 1 | Voice and music playback |
 
 ## Power and Charging

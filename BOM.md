@@ -19,7 +19,7 @@ BOM（Bill of Materials）列出组装一台小小白所需的零件、型号/�
 | 总线舵机 | XL330；总线速率 1 Mbps | 20 | 腿部 12 个、手臂 6 个、头部 2 个；每个舵机附 180 mm 线和螺丝 |
 | 头部协处理器 | Seeed Studio XIAO ESP32S3 Sense | 1 | 带摄像头和麦克风；见[头部固件](xiaoxiaobai/firmware/xiao_face/xiao_face.ino) |
 | 表情屏 | 2 寸 LCD，320×240 | 1 | 显示表情动画 |
-| 音频功放 | MAX98 系列 I2S 功放模块 | 1 | 驱动头部扬声器 |
+| 音频功放 | MAX98357 I2S 功放模块 | 1 | 驱动头部扬声器 |
 | 扬声器 | 小型扬声器 | 1 | 语音与音乐播放 |
 
 ## 电源与充电

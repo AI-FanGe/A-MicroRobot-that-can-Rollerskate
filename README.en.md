@@ -121,7 +121,7 @@ Xiaoxiaobai is a desktop humanoid robot whose movements are driven by policies t
 | Degrees of freedom | 20: legs 6×2, arms 3×2, head 2 (yaw + pitch) |
 | Servos | 20 XL330 bus servos, using a 1 Mbps bus through an OpenRB servo controller board connected to the main controller via USB |
 | Main controller | Raspberry Pi Zero 2 W, YBX-BMI088 IMU (I2C) |
-| Head | XIAO ESP32S3 Sense (camera + microphone), 2-inch LCD, MAX98-series I2S amplifier + small speaker; communicates with the main controller over UART (3 Mbaud) |
+| Head | XIAO ESP32S3 Sense (camera + microphone), 2-inch LCD, MAX98357 I2S amplifier + small speaker; communicates with the main controller over UART (3 Mbaud) |
 | Power | Two Sony 18650 cells (3000 mAh per cell, 2S1P), centered inside the torso, with weight depending on the exact cells; MP1584 buck converter output set to 5 V |
 | Structure | 25 3D-printed structural parts |
 
@@ -179,7 +179,7 @@ See the **[Bill of Materials (BOM)](BOM.en.md)** for models, specifications, and
 | YBX-BMI088 IMU module | 1 | Connects to the main controller over I2C; stacked with it inside the torso |
 | Seeed Studio XIAO ESP32S3 Sense | 1 | Head coprocessor with camera and microphone |
 | 2-inch LCD (320×240) | 1 | Face display |
-| MAX98-series I2S amplifier + small speaker | 1 each | Voice and music playback |
+| MAX98357 I2S amplifier + small speaker | 1 each | Voice and music playback |
 | Sony 18650 lithium-ion cell, 3000 mAh per cell | 2 | Connected in series as a 2S1P battery pack |
 | Three-pin slide switch | 1 | Power control |
 | USB Type-C boost charging module | 1 | Select the **2S, 8.4 V, 2 A** variant |
