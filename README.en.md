@@ -472,6 +472,29 @@ make firmware-upload ESP32_PORT=/dev/ttyACM0
 
 For later updates, use `make firmware-uart` to flash the head through the main controller's UART without disassembling the head.
 
+
+#### Keep Screen Animations Running (Start Automatically at Boot)
+
+After deploying the code and flashing the head firmware, run this once from the **`xiaoxiaobai/` directory on your computer** to keep facial animations running through a standalone background service that starts automatically after the robot reboots:
+
+```bash
+make display-enable HOST=user@xiaoxiaobai.local
+```
+
+This command syncs the code, then installs and immediately starts `xiaoxiaobai-display.service`. You do not need to keep the terminal connected afterward. `user` is the default username in the Xiaoxiaobai image; for the official OS image, substitute your configured username. If `.local` cannot be resolved, use the robot's actual IP address. If you have configured the SSH alias `xiaoxiaobai`, you can simply run `make display-enable`.
+
+Check the service status:
+
+```bash
+ssh user@xiaoxiaobai.local 'systemctl status xiaoxiaobai-display.service --no-pager'
+```
+
+To stop and remove this standalone display service and disable its automatic startup:
+
+```bash
+make display-disable HOST=user@xiaoxiaobai.local
+```
+
 ### 6. Install the Mobile App (Optional)
 
 Install `小小白-1.0.3.apk` from [`release/`](release). If you flashed the Xiaoxiaobai image, the app is ready to use after installation. For a manual installation, also run the following once to configure the robot:
@@ -665,6 +688,7 @@ Then type in the Web UI chat box or click the microphone to speak. Under **Setti
 | :--- | :--- |
 | `make run` | Sync code, start the API + Web UI, and open the browser |
 | `make stop` | Stop the control loop and disable servo torque |
+| `make display-enable HOST=user@xiaoxiaobai.local` / `make display-disable HOST=user@xiaoxiaobai.local` | Start the standalone screen animation service and enable it at boot / stop and remove the service |
 | `make api-enable` / `make api-disable` | Enable / disable the API service at boot |
 | `make api-dev` | Run the Web UI in mock mode on your computer (no hardware required) |
 | `make sim` | Run the complete control code in MuJoCo |

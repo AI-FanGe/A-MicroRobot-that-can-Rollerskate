@@ -40,6 +40,7 @@ Replace the example IP with the robot's actual IP. The Xiaoxiaobai image uses th
 | `make image` | Build a flashable Raspberry Pi image (`build/image/xiaoxiaobai-<date>.img.xz`; requires sudo) |
 | `make run` | Sync code, start the API + Web UI on the robot, and open it in your computer's browser |
 | `make stop` | Stop the control loop and disable servo torque |
+| `make display-enable HOST=user@xiaoxiaobai.local` / `make display-disable HOST=user@xiaoxiaobai.local` | Start the standalone screen animation service and enable it at boot / stop and remove the service |
 | `make api-enable` | Start the API service automatically at boot |
 | `make api-dev` | Run the API / Web UI locally in mock mode (no hardware required) |
 | `make sim` | Run the control code in MuJoCo |

@@ -41,6 +41,7 @@ make run HOST=user@192.168.1.100
 | `make image` | 打包可直接烧录的树莓派镜像（`build/image/xiaoxiaobai-<日期>.img.xz`，需要 sudo） |
 | `make run` | 同步代码，在机器人上启动 API + Web UI，并在本机浏览器打开 |
 | `make stop` | 停止控制循环并卸力 |
+| `make display-enable HOST=user@xiaoxiaobai.local` / `make display-disable HOST=user@xiaoxiaobai.local` | 启动独立屏幕动画服务并设为开机自启 / 停止并移除该服务 |
 | `make api-enable` | 开机自启 API 服务 |
 | `make api-dev` | 在本机以模拟模式运行 API / Web UI（无需硬件） |
 | `make sim` | 在 MuJoCo 中运行控制代码 |

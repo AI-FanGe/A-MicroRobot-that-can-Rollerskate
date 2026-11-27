@@ -473,6 +473,29 @@ make firmware-upload ESP32_PORT=/dev/ttyACM0
 
 以后可以直接 `make firmware-uart`，由主控通过串口给头部更新固件，不用再拆头。
 
+
+#### 开启屏幕动画常驻（开机自启）
+
+完成代码部署和头部固件烧录后，在**电脑上的 `xiaoxiaobai/` 目录**执行一次，让表情屏通过独立后台服务持续播放动画，并在机器人重启后自动启动：
+
+```bash
+make display-enable HOST=user@xiaoxiaobai.local
+```
+
+这条命令会先同步代码，再安装并立即启动 `xiaoxiaobai-display.service`，之后无需一直保持终端连接。`user` 是小小白镜像的默认用户名；使用官方系统时换成你设置的用户名，`.local` 无法解析时换成机器人实际 IP。已配置 SSH 别名 `xiaoxiaobai` 的，也可以直接运行 `make display-enable`。
+
+查看服务状态：
+
+```bash
+ssh user@xiaoxiaobai.local 'systemctl status xiaoxiaobai-display.service --no-pager'
+```
+
+如需停止并移除这个独立屏幕服务、取消其开机自启：
+
+```bash
+make display-disable HOST=user@xiaoxiaobai.local
+```
+
 ### 6. 安装手机 App（可选）
 
 安装 [`release/`](release) 里的 `小小白-1.0.3.apk`。刷小小白镜像的装好就能用；手动配置的还要在机器人上运行一次：
@@ -664,6 +687,7 @@ make voice-key      # 一次性：把通义千问 API Key 存到机器人上
 | :--- | :--- |
 | `make run` | 同步代码，启动 API + Web UI 并打开浏览器 |
 | `make stop` | 停止控制循环并卸力 |
+| `make display-enable HOST=user@xiaoxiaobai.local` / `make display-disable HOST=user@xiaoxiaobai.local` | 启动独立屏幕动画服务并设为开机自启 / 停止并移除该服务 |
 | `make api-enable` / `make api-disable` | 开机自启 / 取消自启 API 服务 |
 | `make api-dev` | 在电脑上以模拟模式运行 Web UI（不需要硬件） |
 | `make sim` | 在 MuJoCo 里运行完整的控制代码 |
