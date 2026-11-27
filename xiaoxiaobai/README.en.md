@@ -50,6 +50,9 @@ Replace the example IP with the robot's actual IP. The Xiaoxiaobai image uses th
 
 See `Makefile` for the full command list.
 
+> [!IMPORTANT]
+> **To keep the face display on and its animations running continuously, you must run `make display-enable HOST=user@xiaoxiaobai.local` to enable the standalone persistent display service.** Deploying the code or flashing the head firmware alone does not enable this service. This setup step is required for persistent facial animations; do not skip it.
+
 ## Policy Models
 
 The Web UI currently uses the Chinese labels shown alongside their English translations below.

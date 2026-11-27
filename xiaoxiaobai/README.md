@@ -51,6 +51,9 @@ make run HOST=user@192.168.1.100
 
 完整命令见 `Makefile`。
 
+> [!IMPORTANT]
+> **要让表情屏常亮、持续播放动画，必须执行 `make display-enable HOST=user@xiaoxiaobai.local`，启用独立的屏幕常驻服务。** 只完成代码部署或头部固件烧录不会启用这个服务；此步骤是表情常亮的必要配置，请勿跳过。
+
 ## 策略模型
 
 | 文件 | Web UI 名称 | 说明 |

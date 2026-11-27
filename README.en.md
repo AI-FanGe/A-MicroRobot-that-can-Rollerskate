@@ -475,6 +475,9 @@ For later updates, use `make firmware-uart` to flash the head through the main c
 
 #### Keep Screen Animations Running (Start Automatically at Boot)
 
+> [!IMPORTANT]
+> **To keep the face display on and its animations running continuously, you must run `make display-enable HOST=user@xiaoxiaobai.local` to enable the standalone persistent display service.** Deploying the code or flashing the head firmware alone does not enable this service. This setup step is required for persistent facial animations; do not skip it.
+
 After deploying the code and flashing the head firmware, run this once from the **`xiaoxiaobai/` directory on your computer** to keep facial animations running through a standalone background service that starts automatically after the robot reboots:
 
 ```bash

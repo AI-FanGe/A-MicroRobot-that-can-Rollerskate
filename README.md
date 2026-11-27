@@ -476,6 +476,9 @@ make firmware-upload ESP32_PORT=/dev/ttyACM0
 
 #### 开启屏幕动画常驻（开机自启）
 
+> [!IMPORTANT]
+> **要让表情屏常亮、持续播放动画，必须执行 `make display-enable HOST=user@xiaoxiaobai.local`，启用独立的屏幕常驻服务。** 只完成代码部署或头部固件烧录不会启用这个服务；此步骤是表情常亮的必要配置，请勿跳过。
+
 完成代码部署和头部固件烧录后，在**电脑上的 `xiaoxiaobai/` 目录**执行一次，让表情屏通过独立后台服务持续播放动画，并在机器人重启后自动启动：
 
 ```bash
