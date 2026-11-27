@@ -119,10 +119,10 @@ Xiaoxiaobai is a desktop humanoid robot whose movements are driven by policies t
 | :--- | :--- |
 | Height / weight | Approximately 30 cm / 1.07 kg (CAD estimate) |
 | Degrees of freedom | 20: legs 6×2, arms 3×2, head 2 (yaw + pitch) |
-| Servos | 20 bus servos, using a 1 Mbps bus through a servo controller board connected to the main controller via USB |
+| Servos | 20 XL330 bus servos, using a 1 Mbps bus through an OpenRB servo controller board connected to the main controller via USB |
 | Main controller | Raspberry Pi Zero 2 W, YBX-BMI088 IMU (I2C) |
-| Head | Head coprocessor (camera + microphone), 2-inch LCD, I2S amplifier + speaker; communicates with the main controller over UART (3 Mbaud) |
-| Power | Two Sony 18650 cells (2S1P), centered inside the torso, with weight depending on the exact cells; MP1584 buck converter output set to 5 V |
+| Head | XIAO ESP32S3 Sense (camera + microphone), 2-inch LCD, MAX98-series I2S amplifier + small speaker; communicates with the main controller over UART (3 Mbaud) |
+| Power | Two Sony 18650 cells (3000 mAh per cell, 2S1P), centered inside the torso, with weight depending on the exact cells; MP1584 buck converter output set to 5 V |
 | Structure | 25 3D-printed structural parts |
 
 ### System Architecture
@@ -168,24 +168,25 @@ Keep the two code directories as siblings: the training scripts export policies 
 
 ### 1. Gather the Parts
 
-See the **[Bill of Materials (BOM)](BOM.en.md)** for models, specifications, quantities, and items still to be confirmed. Roller-skate bearings are listed separately and are not included in the body bearing count.
+See the **[Bill of Materials (BOM)](BOM.en.md)** for models, specifications, and quantities. Roller-skate bearings are listed separately and are not included in the body bearing count.
 
 | Part | Quantity | Notes |
 | :--- | :---: | :--- |
-| Bus servo | 20 | Each servo comes with one 180 mm cable and screws |
-| Idler horn | 4 | For the passive side of the dual-servo blocks at the hips and ankles |
+| XL330 bus servo | 20 | Each servo comes with one 180 mm cable and screws |
+| 3D-printed servo idler horn | 4 | For the passive side of the dual-servo blocks at the hips and ankles |
 | Raspberry Pi Zero 2 W + microSD card (≥16 GB) | 1 each | Main controller and OS storage |
-| OpenRB servo controller board | 1 | Connects to the main controller via USB; see the BOM for the board version |
+| OpenRB servo controller board | 1 | Connects to the main controller via USB |
 | YBX-BMI088 IMU module | 1 | Connects to the main controller over I2C; stacked with it inside the torso |
-| Head coprocessor | 1 | With camera and microphone |
+| Seeed Studio XIAO ESP32S3 Sense | 1 | Head coprocessor with camera and microphone |
 | 2-inch LCD (320×240) | 1 | Face display |
-| I2S amplifier + small speaker | 1 | Speaker approximately 35×25 mm |
-| Sony 18650 lithium-ion cell | 2 | 2S1P battery pack; exact cell model and capacity to be confirmed |
-| 2S BMS, power switch | 1 each | Battery protection and power control; exact specifications to be confirmed |
+| MAX98-series I2S amplifier + small speaker | 1 each | Voice and music playback |
+| Sony 18650 lithium-ion cell, 3000 mAh per cell | 2 | Connected in series as a 2S1P battery pack |
+| Three-pin slide switch | 1 | Power control |
 | USB Type-C boost charging module | 1 | Select the **2S, 8.4 V, 2 A** variant |
 | MP1584 adjustable DC-DC buck converter | 1 | **Set and keep the output at 5 V** to power the main controller |
-| Body bearing: 16 mm inner diameter × 22 mm outer diameter × 4 mm thickness | **4** | Body shaft support; exact mounting locations to be confirmed |
+| Body bearing: 16 mm inner diameter × 22 mm outer diameter × 4 mm thickness | **4** | Body shaft support |
 | Roller-skate bearing: 5 mm inner diameter × 10 mm outer diameter × 4 mm thickness | **8** | For the roller skates; counted separately from body bearings |
+| 3D-printed roller skates | 1 set | Used with the roller-skate bearings listed above |
 | M2 / M2.5 self-tapping screws, servo cables, heat-shrink tubing | As needed | Servo cables can be cut to length and re-crimped |
 
 You will also need a 3D printer and basic tools such as a soldering iron and crimping tool.
@@ -255,7 +256,7 @@ Assemble the other leg as a mirror image.
 
 - Install the two hip yaw servos (IDs 1 and 7) in the pelvis, with bearings supporting the shafts.
 - The waist connects the pelvis to the upper torso.
-- Install the two shoulder pitch servos (IDs 13 and 16) and head yaw servo (ID 19) in the upper torso. There are 4 body bearings in total; exact mounting locations are to be confirmed. See the [BOM](BOM.en.md).
+- Install the two shoulder pitch servos (IDs 13 and 16) and head yaw servo (ID 19) in the upper torso. There are 4 body bearings in total. For specifications, see the [BOM](BOM.en.md).
 - Stack the main controller and IMU into a control module and mount it on one side of the torso. **Secure the IMU firmly**; any looseness directly affects walking.
 - Place the battery pack in the center of the torso for a lower, more stable center of mass.
 
@@ -287,7 +288,7 @@ Daisy-chain all servos, using one-to-two / one-to-three splitter cables near the
 
 ```mermaid
 flowchart TB
-    BAT["2S 18650 Battery Pack<br/>BMS + Switch + USB-C Charging"] -- "Battery Voltage (approx. 6–8.4 V)" --> RB["Servo Controller Board"]
+    BAT["2S 18650 Battery Pack<br/>Switch + USB-C Charging"] -- "Battery Voltage (approx. 6–8.4 V)" --> RB["Servo Controller Board"]
     RB -- "TTL Bus" --> LL["Left Leg 2–7"]
     RB -- "TTL Bus" --> RL["Right Leg 1, 8–12"]
     RB -- "TTL Bus" --> AR["Arms 13–18"]
